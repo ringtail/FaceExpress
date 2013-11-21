@@ -1,0 +1,33 @@
+{
+  "name": "Ringtail.io",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app"
+  },
+  "dependencies": {
+    "express": "3.0.6",
+    "ejs": "*",
+    "webrtc.io":"latest",
+    "webrtc.io-client":"latest",
+    "ws":"latest"
+  },
+  "contributors":[
+  	{
+		"name":"Ringtail",
+		"email":"773913792@qq.com"
+	},
+	{
+		"name":"Shini Chen",
+		"email":""
+	},
+	{
+		"name":"Shiny Fish",
+		"email":""
+	}
+  ],
+  "description":{
+	"read me":"this is an open-source program based on webrtc.io,you can use it in your program,but you must give us a reply",
+	"thanks":"Ben Brittain,Dennis Martensson,David Peter,without you we can't manage it, thank you so much "
+	}
+}

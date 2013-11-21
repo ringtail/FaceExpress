@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ringtail.IO</title>
+  <link rel="stylesheet" href="stylesheets/index.css">
+  <link rel="stylesheet" href="stylesheets/nanoscroller.css">
+  <link rel="stylesheet" href="stylesheets/nanostyle.css">
+  <link rel="stylesheet" href="stylesheets/buttons.css">
+  <link rel="stylesheet" class="umbrui" href="elements/range.css"/>
+  <link rel="stylesheet" class="umbrui" href="elements/checkbox.css"/>
+  <link rel="stylesheet" class="umbrui" href="elements/progress.css"/>
+  <script src="http://apps.renren.com/static/cl.js" type="text/javascript"></script>
+</head>
+<body>
+
+  <header>
+    <img src="images/ringtail.io.png" alt="">
+    <div class="local_block shadow-small">
+      <video id="local" src="" autoplay></video>
+    </div>
+  </header>
+  <div class="content">
+    <aside id="settings">
+      <div id="settings_icon" class="inactive"></div>
+      <div id="settings_pannel">
+        <ul>
+          <li><span>主视频状态</span><input type="checkbox" class="display_blocks" data-icon1="开" data-icon2="关" checked=true></li>
+          <li><span>候选视频1</span><input type="checkbox" class="display_blocks" data-icon1="开" data-icon2="关"  checked=true></li>
+          <li><span>候选视频2</span><input type="checkbox" class="display_blocks" data-icon1="开"  data-icon2="关" checked=true></li>
+          <li><span>候选视频3</span><input type="checkbox" class="display_blocks" data-icon1="开" data-icon2="关"  checked=true></li>
+          <li><span>候选视频4</span><input type="checkbox" class="display_blocks" data-icon1="开" data-icon2="关"  checked=true></li>
+          <li><span>主视频音频</span><input  class="display_blocks range" type="range" min="0" max="100" value="100"></li>
+          <li><span>全局音频</span><input class="display_blocks range" type="range" min="0" max="100" value="100"></li>
+          <li><span>背景图案</span></li>
+        </ul>
+        <div id="bg-blocks">
+            <section class="background-selected selected"></section>
+            <section class="background-selected"></section>
+            <section class="background-selected"></section>
+            <section class="background-selected"></section>
+            <section class="background-selected"></section>
+        </div>
+      </div>
+    </aside>
+    <section id="left-section" class="shadow-big">
+      <section id="video-screen">
+        <video id="main-video" class="remote-video" autoplay controls src=""></video>
+      </section>
+      <section id="video_settings">
+        coming soon! 
+      </section>
+      <section id="video_others">
+        <section class="remote-video-screen">
+          <video class="remote-video" src="" autoplay></video>
+        </section>
+        <section class="remote-video-screen">
+          <video class="remote-video" src="" autoplay></video>
+        </section>
+        <section class="remote-video-screen">
+          <video class="remote-video" src="" autoplay></video>
+        </section>
+        <section class="remote-video-screen">
+          <video class="remote-video" src="" autoplay></video>
+        </section>
+      </section>
+    </section>
+    <section id="right-section" class="shadow-big">
+      <section id="text-section">
+        <div id="text-display" class="nano">
+          <div id="text-box" class="overthrow content">
+            <div class="text-node">
+              <span class="username">Ringtail:</span>
+              <blockquote class="text-content green_type">欢迎使用Ringtail.io</blockquote>
+            </div>
+          </div>
+        </div>
+        <section id="text-settings">
+          coming soon!
+        </section>
+        <section id="text-input">
+          <input type="text" id="input_area" x-webkit-speech>
+        </section>
+        <section id="submit_input">
+          <a data-icon="✍" class="button blue brackets glass reply">回 复</a>   
+        </section>
+      </section>
+    </section>
+  </div>
+  <footer>
+<div id="cl-root">
+</div>
+<script>
+CL.Canvas.autosize();//如果想自适应大小
+CL.Canvas.resize({
+  width: 1200,
+  height: 800
+});//如果想自定义iframe的宽度和高度
+</script>
+  </footer>
+</body>
+<script src="javascripts/jquery.min.js"></script>
+<script src="javascripts/nanoscroller.js"></script>
+<script src="javascripts/ringtail.io.js"></script>
+<script src="javascripts/renren.js"></script>
+
+<script src="javascripts/index.js"></script>
+</html>

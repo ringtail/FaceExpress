@@ -1,0 +1,295 @@
+$('document').ready(function(){
+
+	var videos = [];
+	var room = null;
+
+	var websocketChat= {
+
+	  	send: function(message) {
+	    	
+	    	webrtc._socket.send(message);
+		
+		},
+	  	
+	  	recv: function(message) {
+	    	
+	    	return message;
+		
+		},
+	 
+	 	event: 'receive_chat_msg'
+	
+	};
+
+	var dataChannelChat = {
+	  	
+	  	send: function(message) {
+
+	    	for(var connection in webrtc.dataChannels) {
+
+	      		var channel = webrtc.dataChannels[connection];
+	     	       
+	     	       channel.send(message);
+		}
+	},
+	  	recv: function(channel, message) {
+
+	    		return JSON.parse(message).data;
+	
+	},
+
+	  	event: 'data stream data'
+	
+	};
+	/*this part we deal with the scroller 
+	  and we prevent the defautl scrolling
+	  and did the nano scroller
+	*/
+
+	if(webrtc.checkAPI){
+		/*
+			checkAPI has not been done
+			we should tell why user can't 
+			use it !
+		*/
+
+		webrtc.createStream({
+		      "video": true,
+		      "audio": true
+		}, function(stream) {
+			document.getElementById('local').src = URL.createObjectURL(stream);
+		})
+	}else{
+		/*
+			this part we need to do a lot of things
+			to tell the user why they can not use
+			this awsome app!
+		*/
+		alert("no sorry");
+		return ;
+	}
+
+
+	initChat();
+
+
+	room = window.location.hash.slice(1);
+	// console.log('welcome to room '+room);
+	webrtc.connect("ws:" + , room);
+
+	// initChat();
+
+	webrtc.on('add remote stream', function(stream, socketId) {
+		console.log('a remote stream is coming!');
+
+		videos.push({"id":socketId,"src":stream});
+		// console.log(videos);
+		//undo
+		rebuild_videos();
+
+	});
+
+	 webrtc.on('disconnect stream', function(data) {
+    		console.log("remove "+data);
+    		delete_stream(data);
+    		rebuild_videos();
+  	});
+
+	function initChat(){
+		var chat;
+		/*
+			this part we need to fix it 
+			the dataChannel don't support it;
+			i am so confused 
+			maybe i need to learn straight into the content
+			..........
+
+		*/
+		if(!webrtc.checkServer){
+			
+			console.log('initializing data channel chat');
+   			
+   			chat = dataChannelChat;
+		}else {
+   		
+   			console.log('initializing websocket chat');
+    			
+    			chat = websocketChat;
+ 	 	
+ 	 	}
+
+ 	 	$('#input_area').keydown(function(event){
+ 	 		var key = event.keyCode||event.which;
+ 	 		// console.log(key);
+ 	 		if(key == 13){
+ 	 			 chat.send(JSON.stringify({
+				        "eventName": "chat_msg",
+				        "data": {
+				   	  "username":"hahah",
+				          "messages": $('#input_area').val(),
+				          "room": room,
+				        }
+				      }));
+
+ 	 			// console.log($('#input_area').val());
+	 	 		update_chat_area("Ringtail",$('#input_area').val());
+	 	 		$('#input_area').val("")
+	 	 		
+ 	 		}
+ 	 	});
+
+		webrtc.on(chat.event, function() {
+
+		    
+		    var data = chat.recv.apply(this, arguments);
+		    
+		   
+		    // addToChat(data.messages, data.color.toString(16));
+		    update_remote_chat_information(data.messages,data.username);
+		  });
+	}	 	
+
+	function locate_stream(stream){
+		$('#main-video').attr('src',URL.createObjectURL(stream));
+	}
+	function delete_stream(data){
+		for(var i = 0 ;i<videos.length;i++){
+
+			if(videos[i].id==data){
+			
+				videos.splice(i,1);
+				$('.display_blocks').eq(i).attr("checked",true);
+				
+			}
+		}
+		rebuild_videos();
+		
+	}
+
+	function hide_stream(index){
+
+
+			
+		var remote_videos = document.getElementsByClassName('remote-video');
+
+		remote_videos[index-1].pause();
+		remote_videos[index-1].volume=0;
+		
+		$('.display_blocks').eq(index-1).attr("checked",true);
+
+				
+		// rebuild_videos();
+
+	}
+	function rebuild_videos(){
+		$('.remote-video').attr('src',"");
+		for(var i=0;i<videos.length;i++){
+
+			$('.remote-video').eq(i).attr("src",URL.createObjectURL(videos[i].src));
+			$('.display_blocks').eq(i+1).attr('checked',false);
+			var value = $('.display_blocks').eq(0).attr('value');
+			$('.display_blocks').eq(0).attr('value',parseFloat(value)+0.17);
+		}
+	}
+
+	function update_chat_area(name,text){
+		var text_node='<div class="text-node">\
+					<span class="username">'+name+' :</span>\
+					<blockquote class="text-content green_type">'+text+'</blockquote>\
+				</div>';
+		
+		$(text_node).appendTo('#text-box');
+		$('.nano').nanoScroller();
+		$(".nano").nanoScroller({ scroll: 'bottom' });
+	}
+
+	function update_remote_chat_information(messages,username){
+		var text_node='<div class="text-node">\
+					<span class="username remote-username">'+username+' :</span>\
+					<blockquote class="text-content blue_type">'+messages+'</blockquote>\
+				</div>';
+		
+		$(text_node).appendTo('#text-box');
+		$('.nano').nanoScroller();
+		$(".nano").nanoScroller({ scroll: 'bottom' });
+		
+	}
+	/* some listeners !*/
+
+
+
+
+
+
+	$('#settings_icon').click(function(){
+		
+		if(!!$('#settings').hasClass('inactive')){
+			$('#settings').removeClass('inactive').addClass('active');
+			$('#settings').animate({
+				left:"0px"
+			},600)
+			
+		}else{
+			$('#settings').removeClass('active').addClass('inactive');
+			$('#settings').animate({
+				left:"-400px"
+			},600)
+		}
+	});
+
+
+
+	$('.display_blocks').click(function(){
+
+		var index = $('.display_blocks').index(this);
+
+		if((!$('.display_blocks').attr('checked'))&&index<6){
+			
+			
+
+			 hide_stream(index);
+		}else{
+			
+			if(!!$('.remote-video').eq(index-1).attr('src')){
+
+				var remote_videos = document.getElementsByClassName('remote-video');
+				remote_videos[index-1].play();
+				remote_videos[index-1].volume = 1;
+
+			}else{
+
+			}
+
+		}
+
+	})
+
+	$('.range').change(function(){
+		var index = $('.range').index(this);
+		var main_video = document.getElementById('main-video');
+		var remote_videos  = document.getElementsByClassName('remote-video');
+		var volume = $(this).val(); 
+		if(index===0){
+			
+			
+			main_video.volume = parseFloat(volume)/100;
+		
+		}else{
+
+			main_video.volume = parseFloat(volume)/100;
+			for(var i = 0 ;i<remote_videos.length;i++){
+				
+				remote_videos[i].volume=parseFloat(volume)/100;
+			}
+		}
+	})
+	/*
+		this part we need add a username to
+		the data area so that we can 
+		manage it in the text area;
+	*/
+	
+	/* end of listeners*/
+
+
+});

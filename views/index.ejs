@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script type="text/javascript" src="/javascripts/renren.js"></script>
+  </head>
+  <body>
+    <script type="text/javascript">
+	  var uiOpts = {
+		  url : "http://graph.renren.com/oauth/authorize",
+		  display : "iframe",
+		  params : {"response_type":"token","client_id":"228689"},
+		  onSuccess: function(r){
+		    top.location = "http://apps.renren.com/renrenvideochat/home";
+		  },
+		  onFailure: function(r){} 
+	  };
+	  Renren.ui(uiOpts);
+  </script>
+    <h1><%= title %></h1>
+    <p>Welcome to <%= title %></p>
+  </body>
+</html>

@@ -1,0 +1,155 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+ <script type="text/javascript" src="/javascripts/renren.js"></script>
+ 
+ <script src="javascripts/jquery.min.js"></script>
+
+ <link rel="stylesheet" href="stylesheets/jPages.css">
+ <link rel="stylesheet" href="stylesheets/home.css">
+ <script src="javascripts/jPages.js"></script>
+ <script src="javascripts/lazyload.js"></script>
+
+ <link rel="stylesheet" href="stylesheets/animate.css">
+ 
+ <script type="text/javascript">
+ /* Download lazy load plugin and make sure you add it in the head of your page. */
+  /* when document is ready */
+  /* when document is ready */
+  $(function() {
+    /* initiate plugin */
+    $("div.holder").jPages({
+        containerID: "itemContainer",
+        perPage       : 15,
+        first       : "首页",
+        previous    : "上一页",
+        next        : "下一页",
+        last        : "尾页"
+    });
+  });
+
+    function sendRequest( toId,uid) {//toId被邀请者ID uid发送邀请者ID
+      var params = {"app_id":"228689",
+      				"target_id": toId,
+      				//这里还有一个没有解决的问题 就是我们暂时无法判断用户点的是确定 还是取消 确定与取消应该重定向到不同的地方这里或许应该使用你说的后台看看 人人是怎么操作的方法来实现了
+      				"redirect_uri":"http://apps.renren.com/renrenvideochat/room#"+uid,//成功后重定向地址
+      				"message":"http://apps.renren.com/renrenvideochat/room#"+uid//留言内容
+      				};
+      var style = null;
+                     
+		  style = {
+			  "width":500,  
+			  "height":350  
+		  
+      }
+	  var uiOpts = {
+		  url : "gossip",
+		  display : "page",
+		  params : params,
+		  style : style,
+		  onSuccess: function(r){},
+		  onFailure: function(r){} 
+	  };
+	  Renren.ui(uiOpts);
+    }
+    function invite(){//给好友发送邀请 邀请使用该应用而不是视频
+	    var params = {"app_id":"228689",
+      				  "redirect_uri":"",
+      				  "accept_url":"www.baidu.com",
+      				  "actiontext":"快来百度一下",
+      				  "accept_label":"images/FinalCutKing"
+      				  
+      				};
+      var style = null;
+                     
+		  style = {
+			  "width":500,  
+			  "height":350  
+		  
+      }
+	  var uiOpts = {
+		  url : "request",
+		  display : "page",
+		  params : params,
+		  style : style,
+		  onSuccess: function(r){},
+		  onFailure: function(r){} 
+	  };
+	  Renren.ui(uiOpts);
+    }
+  </script>
+  </head>
+<body>
+  
+  <script type="text/javascript">Renren.init({appId:'228689'});</script>
+
+
+<header>Face Express</header>
+
+</br>
+<div id = "content">
+<div class="target">
+  快速搜索好友：</h2> <input type="text" id="filter">
+</div>
+<!-- item container -->
+    <div class="filtered" >
+       <div class="target">
+       <h2>邀请人人好友 进入 Face Express</h2>
+       <a href="javascript:invite()"><button >邀请好友 </button></a>
+       <div class="code">
+       	<ul id="itemContainer">
+          		<%for(var i=0;i<friendlist.length;i++){%> 
+	          		<li><a href="javascript:sendRequest(<%=friendlist[i].id%>,<%= uid%>)">
+	          		<img src="<%=friendlist[i].tinyurl%>" alt="image"></a><br><h2><span class="note"><%=friendlist[i].name%></span></h2></li>
+	          	<%}%>
+	       
+	    </ul>
+	    </div><!--code end-->
+     </div><!--target end -->
+    </div><!-- filtered end-->
+    <!-- navigation holder -->
+   
+   <div class="holder target" style="text-align:center"></div>
+   
+
+</div> <!-- content end-->
+
+
+</body>
+
+<html>
+
+
+<script>
+$("#filter").keyup(function () {
+    var filter = $(this).val(), count = 0;
+	/* destroy pagination */
+	if(filter.length !=0)        
+      $("div.holder").jPages("destroy");
+    else 
+      $("div.holder").jPages("destroy").jPages({
+            containerID   : "itemContainer",
+            perPage       : 15,
+            first       : "首页",
+             previous    : "上一页",
+             next        : "下一页",
+             last        : "尾页"
+        });   
+    $(".filtered:first li").each(function () {
+		   /* destroy jpages */
+        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+            //$(this).addClass("hidden");
+			$(this).addClass("jp-hidden");
+        } else {
+			$(this).removeClass("jp-hidden");
+            //$(this).removeClass("hidden");
+            count++;
+        }
+    });
+    $("#filter-count").text(count);
+});
+</script>
+
+
+
+

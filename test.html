@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>blur.js</title>
+  
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.7.1.js'></script>
+  <script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js'></script>
+  <script type='text/javascript' src='blur.min.js'></script>
+  
+  <style type='text/css'>
+      body{
+    	
+        background-image:url('bgs/1.png');
+        background-position:top left;
+        background-repeat:repeat;
+        
+            }
+        body{margin:0; padding:0;padding-top:30px;font-family:arial;color:#333;}
+        .target,.targetCopy{ margin:0 auto; width:500px; margin-bottom:50px;  padding:10px;  text-shadow:0 1px 0 white; -moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;-moz-box-shadow:0 1px 0 rgba(0,0,0,0.3),0 -1px 0 rgba(255,255,255,0.8),0 4px 10px rgba(0,0,0,0.6);-webkit-box-shadow:0 1px 0 rgba(0,0,0,0.3),0 -1px 0 rgba(255,255,255,0.8),0 4px 10px rgba(0,0,0,0.6);box-shadow:0 1px 0 rgba(0,0,0,0.3),0 -1px 0 rgba(255,255,255,0.8),0 4px 10px rgba(0,0,0,0.6)} 
+         .target p{ text-align:center;font-size:14px}  
+         header,h1{ width:500px;
+         margin:0 auto;
+         color:white;
+         text-shadow:0 2px 2px black;
+         font-size:6em;margin-bottom:25px;
+         font-weight:bold;
+         text-align:center
+         }
+         h1{font-size:4em}
+          .code,.changelog{ font-family:monospace;position:relative;padding:10px;white-space:pre;-moz-border-radius:10px;-webkit-border-radius:10px;border-radius:10px;background-color:rgba(255,255,255,0.3);-moz-box-shadow:0 -1px 0 rgba(0,0,0,0.4),0 2px 5px rgba(0,0,0,0.4) inset,0 1px 0 #fff;-webkit-box-shadow:0 -1px 0 rgba(0,0,0,0.4),0 2px 5px rgba(0,0,0,0.4) inset,0 1px 0 #fff;box-shadow:0 -1px 0 rgba(0,0,0,0.4),0 2px 5px rgba(0,0,0,0.4) inset,0 1px 0 #fff;overflow-x:scroll} .changelog{ white-space:nowrap} h2{ margin:0;padding:0;margin-bottom:7px;color:white;text-shadow:0 -1px 4px rgba(0,0,0,0.2),0 2px 2px black;display:inline-block}  .note{ font-size:12px; margin:0; padding:0;position: relative;top: -3px} button{ float:right; display:inline-block}  
+        .examples{ text-align:center}
+         .examples button{ float:none}  
+         .string{color:#196161} 
+         .int{color:#8B0000} 
+         .boolean{color:#800080} 
+         .comments{color:#666;margin-left:10px} 
+         .indent{ text-indent:17px} 
+         .arial{ font-family:arial}
+    
+    a, a:visited{
+    	-webkit-transition: all 0.3s ease-out;
+     	-moz-transition: all 0.3s ease-out;
+      	-ms-transition: all 0.3s ease-out;
+       	-o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    	color:#000;
+    }
+    
+    a:hover{
+    	color:transparent;
+    	text-shadow:0 0 5px #000;
+    }
+    
+    a:active{
+    	position:relative;
+    	top:1px;
+    }
+    
+    button{
+    	min-width: 48px;
+		height: 18px;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 3px;
+		border: none;
+		-moz-box-shadow: 0 -1px 0 #fff, 0 1px 2px rgba(0,0,0,0.5);
+		-webkit-box-shadow: 0 -1px 0 #fff, 0 1px 2px rgba(0,0,0,0.5);
+		box-shadow: 0 -1px 0 #fff, 0 1px 2px rgba(0,0,0,0.5);
+		cursor:pointer;
+		color:#666;
+		text-shadow:inherit;
+		
+		font-family: 'Lucida Grande';
+		font-size: 11px;
+		text-decoration:none;
+		display:inline-block;
+    }
+    
+    button:hover{
+    	background: rgba(255, 255, 255, 0.7);
+    	color:#333;
+    }
+    
+    button:active{
+    
+		-moz-box-shadow: 0 -1px 0 #fff, 0 0 2px rgba(0,0,0,0.5);
+		-webkit-box-shadow: 0 -1px 0 #fff, 0 0 2px rgba(0,0,0,0.5);
+		box-shadow: 0 -1px 0 #fff, 0 0 2px rgba(0,0,0,0.5);
+    
+    	position:relative;
+    	top:1px;
+    }
+    
+    
+    .examples button{
+    	margin-bottom:10px;
+    }
+    #download button{
+        float:none;
+        margin-bottom:10px;
+    }
+    
+    
+    #wideContainer{
+    	width: 100%;
+		background-image: url('bgs/2.png');
+		background-position: top left;
+		background-repeat: repeat;
+		padding-top: 30px;
+		height: 165px;
+		margin-bottom: 50px;
+		-moz-box-shadow: 0 2px 5px rgba(0,0,0,0.5) inset,0 -1px 0 #777, 0 1px 0 #fff;
+    	-webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.5) inset,0 -1px 0 #777, 0 1px 0 #fff;
+    	box-shadow: 0 2px 5px rgba(0,0,0,0.5) inset,0 -1px 0 #777, 0 1px 0 #fff;
+    }
+    
+    
+    
+  </style>
+  
+
+
+<script type='text/javascript'>
+
+
+$(document).ready(function(){
+    
+    $('.target').blurjs({
+		source: 'body',
+        radius: 7,
+        overlay: 'rgba(255,255,255,0.4)',
+        optClass: 'blurred',
+        cache:false
+    });
+    
+    
+    // Demo Buttons
+    $('button').live('click', function(e){e.preventDefault();if($(this).attr('rel') && !$(this).hasClass('dl')){window.location = "?bg="+$(this).attr('rel');} else if($(this).text()=="Demo") {demos($(this).parent().attr('id'));} else if($(this).hasClass('dl')){
+    
+    track($(this).attr('rel'), $(this).attr('rel'));
+    
+    }  
+    });
+    
+});
+
+
+function demos(object){if(object=="highblur"){$('#'+object).blurjs({source:'body',radius:10})}else if(object=="overlayblur"){$('#'+object).blurjs({source:'body',overlay:'rgba(255,255,255,0.4)'})}else if(object=="overlayblur2"){$('#'+object).blurjs({source:'body',overlay:'rgba(0,100,100,0.1)'})}else if(object=="offsetblur"){$('#'+object).blurjs({source:'body',offset:{x:15,y:-12}})}else if(object=="sourceblur"){$('#'+object).blurjs({source:'#wideContainer',overlay:'rgba(255,255,255,0.3)'});} else if(object=="draggable"){$('#'+object).blurjs({draggable:true,overlay:'rgba(255,255,255,0.4)'});} else if(object=="cacheblur"){$('#'+object).blurjs({cache:true,debug:true});} }
+
+
+
+</script>
+<script type="text/javascript" src="http://lab.jakiestfu.com/functions.js"></script>
+</head>
+<body>
+
+    <a href="https://github.com/jakiestfu/Blur.js" target="_blank"><img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub"></a>
+
+    <header>blur.js</header>
+
+	<div id="content">
+		
+		<div class="target" style="cursor:pointer;" onclick="window.open('http://jakiestfu.com/posts/blurjs-take-ii');">
+			<h2>Attention!</h2>
+  			<p>There may be a fun candidate for a V2 for Blur.js, view the blog post <a href="http://jakiestfu.com/posts/blurjs-take-ii" target="_blank">here</a></p>
+  			<p>Note: The two versions are different in their nature.</p>
+  			<p><script type="text/javascript" src="http://lab.jakiestfu.com/code.js" data-color="#ddd" id="codejs"></script></p>
+  		</div>
+		
+		<div class="target">
+			<h2>What?</h2>
+  			<p>blur.js is a jQuery plugin that produces psuedo-transparent <br /><a href="http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html" target="_blank">blurred</a> elements over other elements.</p>
+  		</div>
+  		
+  		
+  		<div class="target">
+  			<h2>Code Sample</h2>
+  			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	source: <span class="string">'body'</span>,
+	radius: <span class="int">7</span>,
+	overlay: <span class="string">'rgba(255,255,255,0.4)'</span>
+});</div>
+  		</div>
+  		
+  		
+  		<div class="target">
+			<h2>Examples</h2>
+  			<div class="examples">
+  				<button rel="1">Background 1</button>
+  				<button rel="2">Background 2</button>
+  				<button rel="3">Background 3</button>
+  				<button onclick="window.location.href='simpledemo.html'">Full Page Single Demo</button>
+  				<button onclick="window.location.href='?bg=1&fixed'">Toggle Fixed Background</button>
+  			</div>
+  		</div>
+  		
+  		
+  		
+  		<div class="target">
+			<h2>Why?</h2>
+  			<p>Why the hell not?</p>
+  		</div>
+  		
+  		
+		<div class="target">
+			<h2>Defaults</h2>
+			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	source: <span class="string">'body'</span>,			<span class="comments">//Background to blur</span>
+	radius: <span class="int">5</span>,			<span class="comments">//Blur Radius</span>
+	overlay: <span class="string">''</span>,			<span class="comments">//Overlay Color, follow CSS3's rgba() syntax</span>
+	offset: {			<span class="comments">//Pixel offset of background-position</span>
+		x: <span class="int">0</span>,
+		y: <span class="int">0</span>
+	},
+	optClass: <span class="string">''</span>,			<span class="comments">//Class to add to all affected elements</span>
+	cache: <span class="boolean">false</span>,			<span class="comments">//If set to true, blurred image will be cached and used in the future. If image is in cache already, it will be used.</span>
+	cacheKeyPrefix: <span class="string">'blurjs-'</span>,	<span class="comments">//Prefix to the keyname in the localStorage object</span>
+	draggable: <span class="boolean">false</span>		<span class="comments">//Only used if jQuery UI is present. Will change background-position to fixed</span>
+});</div>
+		</div>
+		
+		
+		<h1>Demos</h1>
+		
+		<div id="highblur" class="targetCopy">
+			<h2>Blur Radius</h2><button>Demo</button>
+  			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	source: <span class="string">'body'</span>,
+	radius: <span class="int">10</span>
+});</div>
+		</div>
+		<div id="overlayblur" class="targetCopy">
+			<h2>Overlay</h2><button>Demo</button>
+  			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	source: <span class="string">'body'</span>,
+	overlay: <span class="string">'rgba(255,255,255,0.4)'</span>
+});</div>
+		</div>
+		
+		<div id="overlayblur2" class="targetCopy">
+			<h2>Overlay 2</h2><button>Demo</button>
+  			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	source: <span class="string">'body'</span>,
+	overlay: <span class="string">'rgba(0,100,100,0.1)'</span>
+});</div>
+		</div>
+		
+		<div id="offsetblur" class="targetCopy">
+			<h2>Offset <span class="note">(source bg attachment must be scroll)</span></h2><button>Demo</button>
+  			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	source: <span class="string">'body'</span>,
+	offset: {
+		x: <span class="int">15</span>,
+		y: <span class="int">-12</span>
+	},
+});</div>
+		</div>
+		
+		<div id="cacheblur" class="targetCopy">
+			<h2>Caching <span class="note">(view console)</span></h2><button onclick="console.log(localStorage); return false;">Click Last</button><button>Demo</button> <button onclick="console.log(localStorage); return false;">Click First</button>
+  			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	source: <span class="string">'body'</span>,
+	cache: <span class="boolean">true</span>,
+	debug: <span class="boolean">true</span>
+});</div>
+		</div>
+		
+		<div id="draggable" class="targetCopy">
+			<h2>Draggable <span class="note">(source bg attachment must be fixed)</span></h2><button>Demo</button>
+  			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	draggable: <span class="boolean">true</span>,
+	overlay: <span class="string">'rgba(255,255,255,0.4)'</span>
+});</div>
+		</div>
+		
+		
+		<div id="wideContainer">
+		<div id="sourceblur" class="targetCopy">
+			<h2>Changing Source</h2><button>Demo</button>
+  			<div class="code">$(<span class="string">'.target'</span>).blurjs({
+	source: <span class="string">'#wideContainer'</span>,<span class="comment">//This specific "panels'" parent</span> 
+	overlay: <span class="string">'rgba(255,255,255,0.3)'</span>
+});</div>
+		</div>
+		</div>
+		
+		<div id="download" class="target">
+        	<h2>Download</h2>
+  			<p>
+                <button class="dl" rel="blur.js">Download blur.js</button>
+                <button class="dl" rel="blur.dev.js">Download blur.dev.js</button>
+                <button class="dl" rel="blur.min.js">Download blur.min.js</button>
+                <button class="dl" rel="blurjs.zip">Download Everything</button>
+            </p>
+  		</div>
+		
+		<div class="target">
+			<h2>Formalities/Issues</h2>
+  			<pre class="changelog">
+  				<div>- Canvas Support Required (server side fallback in the future?)</div>
+  				<div>- Script works best when the source's background-position is set to "top left"</div>
+  				<div class="indent">  <span class="arial">&rarr;</span> Offset parameter can be used if background is positioned differently</div>
+  			</pre>
+  		</div>
+		
+		<div class="target">
+			<h2>Changelog</h2>
+  			<pre class="changelog">* 1.27.2011: Version 0.1 Released</pre>
+  		</div>
+		
+		<div class="target">
+			<h2>Credits</h2>
+  			<pre class="changelog">
+  				<div>- Stack Blur Algorithm and implementation: <a href="http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html" target="_blank">http://www.quasimondo.com/StackBlurForCanvas/StackBlurDemo.html</a></div>
+  				<div>- Backgrounds 1 &amp; 2: <a href="http://pattern8.com/" target="_blank">http://pattern8.com/</a></div>
+  			</pre>
+  		</div>
+		
+	</div>
+	
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-28707220-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>

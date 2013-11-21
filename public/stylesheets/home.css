@@ -1,0 +1,134 @@
+
+      body{
+    	
+        background-image:url('../images/bg1.png');
+        background-position:top left;
+        background-repeat:repeat;
+        
+            }
+        body{margin:0; padding:0;padding-top:30px;font-family:arial;color:#333;}
+        .target,.targetCopy{ 
+          margin:0 auto; 
+          width:600px;
+           margin-bottom:50px;  
+          padding:10px; 
+          text-shadow:0 1px 0 white;
+         -moz-border-radius:10px;
+         -webkit-border-radius:10px;
+         border-radius:10px;
+         -moz-box-shadow:0 1px 0 rgba(0,0,0,0.3),0 -1px 0 rgba(2 55,255,255,0.8),0 4px 10px rgba(0,0,0,0.6);
+         -webkit-box-shadow:0 1px 0 rgba(0,0,0,0.3),0 -1px 0 rgba(255,255,255,0.8),0 4px 10px rgba(0,0,0,0.6);box-shadow:0 1px 0 rgba(0,0,0,0.3),0 -1px 0 rgba(255,255,255,0.8),0 4px 10px rgba(0,0,0,0.6),
+         
+         } 
+         .target p{ text-align:center;font-size:14px} 
+          header,h1{ 
+          width:500px;
+          margin:0 auto;
+          color:white;
+          text-shadow:0 2px 2px black;
+          font-size:6em;
+          margin-bottom:25px;
+          font-weight:bold;
+          text-align:center}
+          h1{
+          font-size:4em    
+          } 
+          .code,.changelog{ 
+          position:relative;
+          padding:10px;
+          -moz-border-radius:10px;
+          -webkit-border-radius:10px;
+          border-radius:10px;
+          background-color:rgba(255,255,255,0.3);
+          -moz-box-shadow:0 -1px 0 rgba(0,0,0,0.4),0 2px 5px rgba(0,0,0,0.4) inset,0 1px 0 #fff;-webkit-box-shadow:0 -1px 0 rgba(0,0,0,0.4),0 2px 5px rgba(0,0,0,0.4) inset,0 1px 0 #fff;box-shadow:0 -1px 0 rgba(0,0,0,0.4),0 2px 5px rgba(0,0,0,0.4) inset,0 1px 0 #fff;}
+          .changelog{ white-space:nowrap}
+          h2{ margin:0;padding:0;margin-bottom:7px;color:white;text-shadow:0 -1px 4px rgba(0,0,0,0.2),0 2px 2px black;display:inline-block}
+           
+          .note{ font-size:12px; margin:0; padding:0;position: relative;top: -3px}
+          button{ float:right; display:inline-block} 
+          .examples{ text-align:center}
+          .examples button{ float:none} 
+          .string{color:#196161} 
+          .int{color:#8B0000}
+          .boolean{color:#800080}
+          .comments{color:#666;margin-left:10px} .indent{ text-indent:17px} .arial{ font-family:arial}
+    
+    a, a:visited{
+    	-webkit-transition: all 0.3s ease-out;
+     	-moz-transition: all 0.3s ease-out;
+      	-ms-transition: all 0.3s ease-out;
+       	-o-transition: all 0.3s ease-out;
+        transition: all 0.3s ease-out;
+    	color:#000;
+    }
+    
+    a:hover{
+    	color:transparent;
+    	text-shadow:0 0 5px #000;
+    }
+    
+    a:active{
+    	position:relative;
+    	top:1px;
+    }
+    
+    button{
+    	min-width: 48px;
+		height: 18px;
+		background: rgba(255, 255, 255, 0.5);
+		border-radius: 3px;
+		border: none;
+		-moz-box-shadow: 0 -1px 0 #fff, 0 1px 2px rgba(0,0,0,0.5);
+		-webkit-box-shadow: 0 -1px 0 #fff, 0 1px 2px rgba(0,0,0,0.5);
+		box-shadow: 0 -1px 0 #fff, 0 1px 2px rgba(0,0,0,0.5);
+		cursor:pointer;
+		color:#666;
+		text-shadow:inherit;
+		
+		font-family: 'Lucida Grande';
+		font-size: 11px;
+		text-decoration:none;
+		display:inline-block;
+    }
+    
+    button:hover{
+    	background: rgba(255, 255, 255, 0.7);
+    	color:#333;
+    }
+    
+    button:active{
+    
+		-moz-box-shadow: 0 -1px 0 #fff, 0 0 2px rgba(0,0,0,0.5);
+		-webkit-box-shadow: 0 -1px 0 #fff, 0 0 2px rgba(0,0,0,0.5);
+		box-shadow: 0 -1px 0 #fff, 0 0 2px rgba(0,0,0,0.5);
+    
+    	position:relative;
+    	top:1px;
+    }
+    
+    
+    .examples button{
+    	margin-bottom:10px;
+    }
+    #download button{
+        float:none;
+        margin-bottom:10px;
+    }
+    
+    
+    #wideContainer{
+    	width: 100%;
+		background-image: url('bgs/2.png');
+		background-position: top left;
+		background-repeat: repeat;
+		padding-top: 30px;
+		height: 165px;
+		margin-bottom: 50px;
+		-moz-box-shadow: 0 2px 5px rgba(0,0,0,0.5) inset,0 -1px 0 #777, 0 1px 0 #fff;
+    	-webkit-box-shadow: 0 2px 5px rgba(0,0,0,0.5) inset,0 -1px 0 #777, 0 1px 0 #fff;
+    	box-shadow: 0 2px 5px rgba(0,0,0,0.5) inset,0 -1px 0 #777, 0 1px 0 #fff;
+    }
+    
+    
+    
+  
